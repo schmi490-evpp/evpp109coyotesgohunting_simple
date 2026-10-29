@@ -223,9 +223,9 @@ function renderPracticeGeneration(){
   <strong>Practice Problem </strong>
 <br>
   <div class="practice-box">
-These first four generations are practice.
-You must correctly calculate the results before
-the automatic calculator unlocks.
+This practice problem helps you learn the rules.
+
+You must correctly calculate the results before the automatic calculator unlocks.
 </div>
 
   <br><br>
