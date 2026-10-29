@@ -24,44 +24,132 @@ let coyotes = 1;
 let labHistory = [];
 
 const practiceGenerations = {
-
-  1: {
-    catches: [1],
-    survivingMice: 9,
-    survivingCoyotes: 0,
-    offspring: 0,
-    nextMice: 18,
-    nextCoyotes: 1
-  },
-
-  2: {
-    catches: [3],
-    survivingMice: 15,
-    survivingCoyotes: 0,
-    offspring: 0,
-    nextMice: 30,
-    nextCoyotes: 1
-  },
-
-  3: {
-    catches: [6],
-    survivingMice: 24,
-    survivingCoyotes: 1,
-    offspring: 1,
-    nextMice: 48,
-    nextCoyotes: 2
-  },
-
-  4: {
-    catches: [6,4],
-    survivingMice: 38,
-    survivingCoyotes: 1,
-    offspring: 1,
-    nextMice: 76,
-    nextCoyotes: 2
-  }
-
+  1: {},
+  2: {},
+  3: {},
+  4: {}
 };
+
+generatePracticeGenerations();
+
+function generatePracticeGenerations(){
+
+  // Generation 1
+
+  let g1Catch =
+    randomInteger(1,4);
+
+  practiceGenerations[1] = {
+
+    catches:[g1Catch],
+
+    survivingMice:
+      10 - g1Catch,
+
+    survivingCoyotes:
+      0,
+
+    offspring:
+      0,
+
+    nextMice:
+      Math.max(
+        (10-g1Catch)*2,
+        10
+      ),
+
+    nextCoyotes:
+      1
+  };
+
+  // Generation 2
+
+  let g2Catch =
+    randomInteger(1,4);
+
+  practiceGenerations[2] = {
+
+    catches:[g2Catch],
+
+    survivingMice:
+      18 - g2Catch,
+
+    survivingCoyotes:
+      0,
+
+    offspring:
+      0,
+
+    nextMice:
+      Math.min(
+        (18-g2Catch)*2,
+        100
+      ),
+
+    nextCoyotes:
+      1
+  };
+
+  // Generation 3
+
+  let g3Catch =
+    randomInteger(5,9);
+
+  practiceGenerations[3] = {
+
+    catches:[g3Catch],
+
+    survivingMice:
+      30 - g3Catch,
+
+    survivingCoyotes:
+      1,
+
+    offspring:
+      Math.floor(g3Catch/5),
+
+    nextMice:
+      Math.min(
+        (30-g3Catch)*2,
+        100
+      ),
+
+    nextCoyotes:
+      1 + Math.floor(g3Catch/5)
+  };
+
+  // Generation 4
+
+  let catch1 =
+    randomInteger(5,8);
+
+  let catch2 =
+    randomInteger(1,4);
+
+  practiceGenerations[4] = {
+
+    catches:[catch1,catch2],
+
+    survivingMice:
+      48 - catch1 - catch2,
+
+    survivingCoyotes:
+      1,
+
+    offspring:
+      Math.floor(catch1/5),
+
+    nextMice:
+      Math.min(
+        (48-catch1-catch2)*2,
+        100
+      ),
+
+    nextCoyotes:
+      1 + Math.floor(catch1/5)
+  };
+
+}
 
 const loginCard =
 document.getElementById("login-card");
@@ -197,6 +285,12 @@ function renderPracticeGeneration(){
 
   `
   <strong>Practice Generation ${generation}</strong>
+<br>
+  <div class="practice-box">
+These first four generations are practice.
+You must correctly calculate the results before
+the automatic calculator unlocks.
+</div>
 
   <br><br>
 
@@ -231,7 +325,7 @@ function renderPracticeGeneration(){
   <li>One offspring is produced for every 5 mice caught.</li>
   <li>Surviving mice double.</li>
   <li>Mouse populations cannot exceed 100.</li>
-  <li>Each generation must start with at least 1 coyote.</li>
+  <li>If no coyotes survive and no offspring are produced, a new coyote immigrates into the area. The next generation will still begin with 1 coyote.</li>
   </ul>
   `;
 
