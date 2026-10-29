@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+match /databases/{database}/documents {
+match /labSubmissions/{document} {
+// Students can submit results
+allow create: if true;
+// Prevent students from reading everyone's data
+allow read: if false;
+// Prevent changing submissions
+allow update: if false;
+// Prevent deleting submissions
+allow delete: if false;
+}
+}
+}
