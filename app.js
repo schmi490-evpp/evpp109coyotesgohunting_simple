@@ -387,11 +387,8 @@ Begin Actual Lab
 `;
 
 // Wait for student to click
-2
 // "Begin Actual Lab"
-3
- 
-4
+
 return;
 
 };
@@ -409,56 +406,6 @@ function(){
 
 };
 
-// ======================================
-// ACTUAL LAB GENERATIONS
-// ======================================
-
-
-
-  instructionsBox.innerHTML =
-
-  `
-  <strong>
-  Demonstration Generation ${generation}
-  </strong>
-
-  <div class="practice-box">
-
-  Study this worked example.
-
-  Beginning with Generation 1,
-  you will perform the physical hunt and
-  the calculator will perform the math.
-
-  </div>
-
-  <br>
-
-  Starting mice:
-  ${data.mice}
-
-  <br>
-
-  Starting coyotes:
-  ${data.coyotes}
-
-  <br><br>
-
-  ${catchesText}
-
-  `;
-
-  coyoteInputs.innerHTML =
-
-  `
-  <button onclick="advanceFixedGeneration()">
-
-  Continue →
-
-  </button>
-  `;
-
-}
 
 
 function renderPhysicalLabGeneration(){
@@ -471,7 +418,7 @@ function renderPhysicalLabGeneration(){
   ${generation}
   </strong>
 
-  <div class="next-generation-box">
+  <div class="next-generation-box"> You are now beginning the physical hunt. Use the initial numbers the computer gives you and: <br>
 
   1. Scatter the beans randomly.
 
