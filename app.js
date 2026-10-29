@@ -408,3 +408,462 @@ function(){
   renderGeneration();
 
 };
+
+// ======================================
+// ACTUAL LAB GENERATIONS
+// ======================================
+
+const actualGenerations = {
+
+  1: {
+    mice: 10,
+    coyotes: 1,
+    catches: [1]
+  },
+
+  2: {
+    mice: 18,
+    coyotes: 1,
+    catches: [3]
+  },
+
+  3: {
+    mice: 30,
+    coyotes: 1,
+    catches: [6]
+  },
+
+  4: {
+    mice: 48,
+    coyotes: 2,
+    catches: [6,4]
+  }
+
+};
+
+function renderStudentGeneration(){
+
+  // Demonstration generations
+
+  if(generation <= 4){
+
+    renderFixedGeneration();
+
+    return;
+
+  }
+
+  // Student generations
+
+  renderPhysicalLabGeneration();
+
+}
+
+function renderFixedGeneration(){
+
+  const data =
+    actualGenerations[generation];
+
+  let catchesText = "";
+
+  data.catches.forEach(
+
+    (value,index) => {
+
+      catchesText +=
+
+      `
+      Coyote ${index+1}
+      caught
+      <strong>${value}</strong>
+      mice<br>
+      `;
+
+    }
+
+  );
+
+  instructionsBox.innerHTML =
+
+  `
+  <strong>
+  Demonstration Generation ${generation}
+  </strong>
+
+  <div class="practice-box">
+
+  Study this worked example.
+
+  Beginning with Generation 5,
+  you will perform the physical hunt and
+  the calculator will perform the math.
+
+  </div>
+
+  <br>
+
+  Starting mice:
+  ${data.mice}
+
+  <br>
+
+  Starting coyotes:
+  ${data.coyotes}
+
+  <br><br>
+
+  ${catchesText}
+
+  `;
+
+  coyoteInputs.innerHTML =
+
+  `
+  <button onclick="advanceFixedGeneration()">
+
+  Continue →
+
+  </button>
+  `;
+
+}
+
+window.advanceFixedGeneration =
+function(){
+
+  const data =
+    actualGenerations[generation];
+
+  let totalCaught = 0;
+
+  data.catches.forEach(
+
+    v => totalCaught += v
+
+  );
+
+  let survivingMice =
+    data.mice -
+    totalCaught;
+
+  let survivingCoyotes = 0;
+
+  let offspring = 0;
+
+  data.catches.forEach(
+
+    caught => {
+
+      if(caught >= 5){
+
+        survivingCoyotes++;
+
+        offspring +=
+          Math.floor(
+            caught / 5
+          );
+
+      }
+
+    }
+
+  );
+
+  addTableRow(
+    generation,
+    data.mice,
+    data.coyotes,
+    data.catches.join(", "),
+    survivingMice,
+    survivingCoyotes,
+    offspring
+  );
+
+  if(generation === 1){
+
+    mice = 18;
+    coyotes = 1;
+
+  }
+
+  if(generation === 2){
+
+    mice = 30;
+    coyotes = 1;
+
+  }
+
+  if(generation === 3){
+
+    mice = 48;
+    coyotes = 2;
+
+  }
+
+  if(generation === 4){
+
+    mice = 76;
+    coyotes = 2;
+
+  }
+
+  generation++;
+
+  renderGeneration();
+
+};
+
+function renderPhysicalLabGeneration(){
+
+  instructionsBox.innerHTML =
+
+  `
+  <strong>
+  Physical Hunt Generation
+  ${generation}
+  </strong>
+
+  <div class="next-generation-box">
+
+  1. Scatter the beans randomly.
+
+  <br><br>
+
+  2. Each coyote receives ONE hunt.
+
+  <br><br>
+
+  3. Count how many beans each coyote catches.
+
+  <br><br>
+
+  4. Enter those numbers below.
+
+  <br><br>
+
+  The calculator will determine:
+
+  <ul>
+
+  <li>Mice surviving</li>
+
+  <li>Coyote survival</li>
+
+  <li>Coyote offspring</li>
+
+  <li>Next generation populations</li>
+
+  </ul>
+
+  Record the resulting table in your
+  Excel workbook.
+
+  </div>
+  `;
+
+  coyoteInputs.innerHTML = "";
+
+  for(let i=1;i<=coyotes;i++){
+
+    coyoteInputs.innerHTML +=
+
+    `
+    <div class="coyote-row">
+
+      <label>
+
+      Coyote ${i}
+
+      </label>
+
+      <input
+        type="number"
+        min="0"
+        id="coyote-${i}"
+      >
+
+    </div>
+    `;
+
+  }
+
+  coyoteInputs.innerHTML +=
+
+  `
+  <button onclick="calculateGeneration()">
+
+  Calculate Next Generation
+
+  </button>
+  `;
+
+}
+
+window.calculateGeneration =
+function(){
+
+  let captures = [];
+
+  let totalCaught = 0;
+
+  for(let i=1;i<=coyotes;i++){
+
+    const value =
+
+      Number(
+        document.getElementById(
+          `coyote-${i}`
+        ).value
+      );
+
+    captures.push(value);
+
+    totalCaught += value;
+
+  }
+
+  let survivingMice =
+    mice - totalCaught;
+
+  survivingMice =
+    Math.max(
+      survivingMice,
+      0
+    );
+
+  let survivingCoyotes = 0;
+
+  let offspring = 0;
+
+  captures.forEach(
+
+    value => {
+
+      if(value >= 5){
+
+        survivingCoyotes++;
+
+        offspring +=
+          Math.floor(
+            value / 5
+          );
+
+      }
+
+    }
+
+  );
+
+  addTableRow(
+
+    generation,
+
+    mice,
+
+    coyotes,
+
+    captures.join(", "),
+
+    survivingMice,
+
+    survivingCoyotes,
+
+    offspring
+
+  );
+
+  let nextMice =
+    Math.min(
+      Math.max(
+        survivingMice * 2,
+        10
+      ),
+      100
+    );
+
+  let nextCoyotes =
+    Math.max(
+      survivingCoyotes +
+      offspring,
+      1
+    );
+
+  resultsOutput.innerHTML =
+
+  `
+  <strong>
+  Results
+  </strong>
+
+  <br><br>
+
+  Mice Surviving:
+  ${survivingMice}
+
+  <br>
+
+  Coyotes Surviving:
+  ${survivingCoyotes}
+
+  <br>
+
+  Offspring:
+  ${offspring}
+
+  <br><br>
+
+  Next Generation:
+
+  <br>
+
+  Mice:
+  ${nextMice}
+
+  <br>
+
+  Coyotes:
+  ${nextCoyotes}
+  `;
+
+  mice = nextMice;
+  coyotes = nextCoyotes;
+
+  generation++;
+
+  renderGeneration();
+
+};
+
+function addTableRow(
+  gen,
+  mice,
+  coyotes,
+  captures,
+  survivingMice,
+  survivingCoyotes,
+  offspring
+){
+
+  const tbody =
+    document.getElementById(
+      "results-body"
+    );
+
+  const row =
+    document.createElement("tr");
+
+  row.innerHTML =
+
+  `
+  <td>${gen}</td>
+  <td>${mice}</td>
+  <td>${coyotes}</td>
+  <td>${captures}</td>
+  <td>${survivingMice}</td>
+  <td>${survivingCoyotes}</td>
+  <td>${offspring}</td>
+  `;
+
+  tbody.appendChild(row);
+
+}
