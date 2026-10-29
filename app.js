@@ -193,7 +193,7 @@ function renderGeneration(){
 
 } else {
 
-  renderStudentGeneration();
+  renderPhysicalLabGeneration();
 
 }
 
