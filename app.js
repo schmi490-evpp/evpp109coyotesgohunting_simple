@@ -401,7 +401,7 @@ function(){
 
   generation = 1;
 
-  mice = 10;
+  mice = 5;
 
   coyotes = 1;
 
@@ -413,75 +413,7 @@ function(){
 // ACTUAL LAB GENERATIONS
 // ======================================
 
-const actualGenerations = {
 
-  1: {
-    mice: 10,
-    coyotes: 1,
-    catches: [1]
-  },
-
-  2: {
-    mice: 18,
-    coyotes: 1,
-    catches: [3]
-  },
-
-  3: {
-    mice: 30,
-    coyotes: 1,
-    catches: [6]
-  },
-
-  4: {
-    mice: 48,
-    coyotes: 2,
-    catches: [6,4]
-  }
-
-};
-
-function renderStudentGeneration(){
-
-  // Demonstration generations
-
-  if(generation <= 4){
-
-    renderFixedGeneration();
-
-    return;
-
-  }
-
-  // Student generations
-
-  renderPhysicalLabGeneration();
-
-}
-
-function renderFixedGeneration(){
-
-  const data =
-    actualGenerations[generation];
-
-  let catchesText = "";
-
-  data.catches.forEach(
-
-    (value,index) => {
-
-      catchesText +=
-
-      `
-      Coyote ${index+1}
-      caught
-      <strong>${value}</strong>
-      mice<br>
-      `;
-
-    }
-
-  );
 
   instructionsBox.innerHTML =
 
@@ -494,7 +426,7 @@ function renderFixedGeneration(){
 
   Study this worked example.
 
-  Beginning with Generation 5,
+  Beginning with Generation 1,
   you will perform the physical hunt and
   the calculator will perform the math.
 
