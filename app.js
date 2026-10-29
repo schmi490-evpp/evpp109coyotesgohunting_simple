@@ -17,18 +17,13 @@ let studentName = "";
 let studentEmail = "";
 let runId = "";
 
-let generation = 1;
+let generation = 0;
 let mice = 10;
 let coyotes = 1;
 
 let labHistory = [];
 
-const practiceGenerations = {
-  1: {},
-  2: {},
-  3: {},
-  4: {}
-};
+const practiceProblem = generatePracticeProblem();
 
 function randomInteger(min,max){
 
@@ -39,124 +34,55 @@ function randomInteger(min,max){
 
 }
 
-generatePracticeGenerations();
+function generatePracticeProblem(){
 
+  const startingMice =
+    randomInteger(10,20);
 
-function generatePracticeGenerations(){
+  const caught =
+    randomInteger(1,8);
 
-  // Generation 1
+  const survivingMice =
+    startingMice - caught;
 
-  let g1Catch =
-    randomInteger(1,4);
+  const survivingCoyotes =
+    caught >= 5 ? 1 : 0;
 
-  practiceGenerations[1] = {
+  const offspring =
+    Math.floor(caught / 5);
 
-    catches:[g1Catch],
-
-    survivingMice:
-      10 - g1Catch,
-
-    survivingCoyotes:
-      0,
-
-    offspring:
-      0,
-
-    nextMice:
+  const nextMice =
+    Math.min(
       Math.max(
-        (10-g1Catch)*2,
+        survivingMice * 2,
         10
       ),
+      100
+    );
 
-    nextCoyotes:
+  const nextCoyotes =
+    Math.max(
+      survivingCoyotes +
+      offspring,
       1
-  };
+    );
 
-  // Generation 2
+  return {
 
-  let g2Catch =
-    randomInteger(1,4);
+    startingMice,
 
-  practiceGenerations[2] = {
+    catches:[caught],
 
-    catches:[g2Catch],
+    survivingMice,
 
-    survivingMice:
-      18 - g2Catch,
+    survivingCoyotes,
 
-    survivingCoyotes:
-      0,
+    offspring,
 
-    offspring:
-      0,
+    nextMice,
 
-    nextMice:
-      Math.min(
-        (18-g2Catch)*2,
-        100
-      ),
+    nextCoyotes
 
-    nextCoyotes:
-      1
-  };
-
-  // Generation 3
-
-  let g3Catch =
-    randomInteger(5,9);
-
-  practiceGenerations[3] = {
-
-    catches:[g3Catch],
-
-    survivingMice:
-      30 - g3Catch,
-
-    survivingCoyotes:
-      1,
-
-    offspring:
-      Math.floor(g3Catch/5),
-
-    nextMice:
-      Math.min(
-        (30-g3Catch)*2,
-        100
-      ),
-
-    nextCoyotes:
-      1 + Math.floor(g3Catch/5)
-  };
-
-  // Generation 4
-
-  let catch1 =
-    randomInteger(5,8);
-
-  let catch2 =
-    randomInteger(1,4);
-
-  practiceGenerations[4] = {
-
-    catches:[catch1,catch2],
-
-    survivingMice:
-      48 - catch1 - catch2,
-
-    survivingCoyotes:
-      1,
-
-    offspring:
-      Math.floor(catch1/5),
-
-    nextMice:
-      Math.min(
-        (48-catch1-catch2)*2,
-        100
-      ),
-
-    nextCoyotes:
-      1 + Math.floor(catch1/5)
   };
 
 }
@@ -261,22 +187,22 @@ function renderGeneration(){
   coyoteCount.textContent =
     coyotes;
 
-  if(generation <= 4){
+ if(generation === 0){
 
-    renderPracticeGeneration();
+  renderPracticeGeneration();
 
-  } else {
+} else {
 
-    renderStudentGeneration();
+  renderStudentGeneration();
 
-  }
+}
 
 }
 
 function renderPracticeGeneration(){
 
   const data =
-    practiceGenerations[generation];
+    practiceProblem;
 
   let catchesText = "";
 
@@ -294,7 +220,7 @@ function renderPracticeGeneration(){
   instructionsBox.innerHTML =
 
   `
-  <strong>Practice Generation ${generation}</strong>
+  <strong>Practice Problem </strong>
 <br>
   <div class="practice-box">
 These first four generations are practice.
@@ -305,7 +231,7 @@ the automatic calculator unlocks.
   <br><br>
 
   Starting mice:
-  ${mice}
+  ${data.startingMice}
 
   <br>
 
@@ -378,7 +304,7 @@ window.checkPracticeGeneration =
 function(){
 
   const data =
-    practiceGenerations[generation];
+    practiceProblem;
 
   const miceAns =
     Number(
@@ -442,21 +368,43 @@ function(){
 
   resultsOutput.innerHTML =
 
-  `
-  ✅ Correct!
+`
+✅ Correct!
 
-  Generation ${generation}
-  completed.
-  `;
+You have demonstrated that you understand the rules.
 
-  mice = data.nextMice;
-  coyotes = data.nextCoyotes;
+Press Continue to begin the actual lab.
+`;
 
-  generation++;
+coyoteInputs.innerHTML +=
 
-  setTimeout(
-    renderGeneration,
-    1000
-  );
+`
+<br>
+
+<button onclick="beginActualLab()">
+Begin Actual Lab
+</button>
+`;
+
+// Wait for student to click
+2
+// "Begin Actual Lab"
+3
+ 
+4
+return;
+
+};
+
+window.beginActualLab =
+function(){
+
+  generation = 1;
+
+  mice = 10;
+
+  coyotes = 1;
+
+  renderGeneration();
 
 };
