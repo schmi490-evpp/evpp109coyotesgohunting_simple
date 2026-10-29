@@ -30,8 +30,6 @@ const practiceGenerations = {
   4: {}
 };
 
-generatePracticeGenerations();
-
 function randomInteger(min,max){
 
   return Math.floor(
@@ -40,6 +38,9 @@ function randomInteger(min,max){
   ) + min;
 
 }
+
+generatePracticeGenerations();
+
 
 function generatePracticeGenerations(){
 
