@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EVPP Predator-Prey Simulation</title>
+
+<title>EVPP Predator-Prey Lab Assistant</title>
 
 <link rel="stylesheet" href="style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>Predator–Prey Simulation Lab</h1>
+<h1>Predator–Prey Lab Assistant</h1>
 
 <p class="subtitle">
-Coyotes and mice population dynamics simulation
+Use this tool to record coyote hunts and automatically calculate each new generation.
 </p>
 
-<!-- Student Info -->
+<!-- STUDENT INFO -->
 
 <div id="login-card" class="card">
 
@@ -34,16 +33,16 @@ Coyotes and mice population dynamics simulation
 <input type="email" id="student-email">
 
 <button id="start-btn">
-Begin Simulation
+Begin Lab
 </button>
 
 </div>
 
-<!-- Simulation Area -->
+<!-- LAB AREA -->
 
-<div id="simulation-area" class="hidden">
+<div id="lab-area" class="hidden">
 
-<div class="top-bar">
+<div class="info-bar">
 
 <div>
 <strong>Name:</strong>
@@ -57,6 +56,8 @@ Begin Simulation
 
 </div>
 
+<!-- GENERATION CARD -->
+
 <div class="card">
 
 <h2>
@@ -64,102 +65,127 @@ Generation
 <span id="generation-number">1</span>
 </h2>
 
-<div class="stats-grid">
+<div class="population-grid">
 
-<div class="stat">
-<div class="stat-label">Mice</div>
-<div class="stat-value" id="mice-count">10</div>
+<div class="population-box">
+<div class="label">Starting Mice</div>
+<div class="value" id="mice-count">10</div>
 </div>
 
-<div class="stat">
-<div class="stat-label">Coyotes</div>
-<div class="stat-value" id="coyote-count">1</div>
+<div class="population-box">
+<div class="label">Starting Coyotes</div>
+<div class="value" id="coyote-count">1</div>
 </div>
 
 </div>
 
 </div>
+
+<!-- INSTRUCTIONS -->
 
 <div class="card">
 
-<h2>Field</h2>
+<h2>What To Do</h2>
 
-<div id="field">
+<p id="generation-instructions">
 
-<div id="coyote-icon">
-🐺
-</div>
+Review the information for this generation.
 
-<div id="mouse-area">
-🐭 🐭 🐭 🐭 🐭 🐭 🐭 🐭 🐭 🐭
-</div>
+</p>
 
 </div>
 
-<button id="hunt-btn">
-🐺 Hunt
+<!-- COYOTE DATA ENTRY -->
+
+<div class="card">
+
+<h2>Coyote Hunts</h2>
+
+<div id="coyote-inputs">
+
+<!-- Filled automatically -->
+
+</div>
+
+<button id="calculate-btn">
+
+Calculate Next Generation
+
 </button>
 
-<p id="hunt-result"></p>
-
 </div>
 
-<div id="screenshot-warning" class="warning hidden">
-
-📸 Screenshot Required
-
-Take a screenshot showing:
-
-<ul>
-<li>Name</li>
-<li>Run ID</li>
-<li>Generation 10</li>
-<li>Mice Population</li>
-<li>Coyote Population</li>
-</ul>
-
-</div>
+<!-- RESULTS -->
 
 <div class="card">
 
-<h2>Population Graph</h2>
+<h2>Results</h2>
 
-<canvas id="populationChart"></canvas>
+<div id="results-output">
+
+No results yet.
 
 </div>
 
+</div>
+
+<!-- TABLE -->
+
 <div class="card">
 
-<h2>Results Table</h2>
+<h2>Lab Data Table</h2>
 
-<table id="results-table">
+<table>
 
 <thead>
 
 <tr>
-<th>Gen</th>
-<th>Mice</th>
-<th>Coyotes</th>
-<th>Captured</th>
+<th>Generation</th>
+<th>Starting Mice</th>
+<th>Starting Coyotes</th>
+<th>Coyote Captures</th>
+<th>Mice Surviving</th>
+<th>Coyotes Surviving</th>
+<th>Offspring</th>
 </tr>
 
 </thead>
 
 <tbody id="results-body">
+
 </tbody>
 
 </table>
 
 </div>
 
+<!-- SCREENSHOT REMINDER -->
+
+<div id="screenshot-warning"
+class="warning hidden">
+
+<h3>📸 Screenshot Required</h3>
+
+<p>
+Take a picture of your physical setup and your screen before continuing.
+</p>
+
+</div>
+
+<!-- DOWNLOADS -->
+
 <div class="card">
 
 <button id="download-csv">
+
 Download CSV
+
 </button>
 
 <button id="download-certificate">
-Download Certificate
+
+Download Completion Certificate
+
 </button>
 
 </div>
