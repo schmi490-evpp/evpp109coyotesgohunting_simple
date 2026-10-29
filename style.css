@@ -4,25 +4,25 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #222;
 }
 
 .container {
   max-width: 1000px;
   margin: auto;
-  padding: 20px;
+  padding: 25px;
 }
 
 h1 {
   margin-bottom: 5px;
-  color: #184d47;
+  color: #1f4d3a;
 }
 
 .subtitle {
   color: #666;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .card {
@@ -30,19 +30,19 @@ h1 {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
 }
 
 label {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
   font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 5px;
 }
 
 input {
   width: 100%;
-  max-width: 450px;
+  max-width: 300px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -53,91 +53,96 @@ button {
   padding: 10px 18px;
   border: none;
   border-radius: 8px;
-  background: #184d47;
+  background: #1f4d3a;
   color: white;
-  cursor: pointer;
   font-size: 15px;
+  cursor: pointer;
 }
 
 button:hover {
-  background: #123732;
+  background: #173a2c;
 }
 
 .hidden {
   display: none;
 }
 
-.top-bar {
+.info-bar {
   background: white;
-  padding: 12px;
   border-radius: 10px;
+  padding: 12px;
   margin-bottom: 20px;
+
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
-.stats-grid {
+.population-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-.stat {
-  background: #eef4f1;
-  border-radius: 10px;
-  padding: 20px;
+.population-box {
   text-align: center;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #666;
-}
-
-.stat-value {
-  font-size: 36px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-#field {
-  position: relative;
-  background: linear-gradient(
-    to bottom,
-    #bfe6b8,
-    #a4d89c
-  );
-  min-height: 220px;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-
-#coyote-icon {
-  font-size: 60px;
-  position: absolute;
-  left: 10px;
-  top: 90px;
-  transition: all 1.8s ease;
-}
-
-#mouse-area {
+  background: #edf5f1;
+  border-radius: 8px;
   padding: 20px;
-  line-height: 2.3;
-  font-size: 24px;
+}
+
+.population-box .label {
+  color: #666;
+  font-size: 14px;
+}
+
+.population-box .value {
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+#generation-instructions {
+  line-height: 1.6;
+}
+
+#coyote-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.coyote-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.coyote-row label {
+  margin: 0;
+  min-width: 140px;
+}
+
+.coyote-row input {
+  width: 120px;
+}
+
+#results-output {
+  line-height: 1.8;
+  font-size: 15px;
 }
 
 .warning {
-  border: 2px solid #d97706;
   background: #fff7ed;
+  border: 2px solid #f59e0b;
   border-radius: 12px;
   padding: 15px;
   margin-bottom: 20px;
 }
 
-.warning ul {
-  margin-top: 10px;
+.warning h3 {
+  margin-top: 0;
 }
 
 table {
@@ -146,31 +151,61 @@ table {
 }
 
 th {
-  background: #184d47;
+  background: #1f4d3a;
   color: white;
   padding: 10px;
+  text-align: left;
 }
 
 td {
-  border-bottom: 1px solid #ddd;
   padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-#hunt-result {
-  margin-top: 10px;
+tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.completed-banner {
+  text-align: center;
+  background: #e8f5e9;
+  border: 2px solid #4caf50;
+  border-radius: 12px;
+  padding: 20px;
   font-weight: bold;
-  color: #184d47;
 }
 
-@media(max-width:700px){
+.practice-box {
+  background: #f3f7fc;
+  border-left: 4px solid #3b82f6;
+  padding: 12px;
+  margin-top: 10px;
+}
 
-  .stats-grid{
+.next-generation-box {
+  background: #edf8ee;
+  border-left: 4px solid #16a34a;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+
+  .population-grid {
     grid-template-columns: 1fr;
   }
 
-  .top-bar{
+  .info-bar {
     flex-direction: column;
-    gap:10px;
+  }
+
+  .coyote-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coyote-row input {
+    width: 100%;
   }
 
 }
