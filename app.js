@@ -178,22 +178,33 @@ function startLab(){
 
 function renderGeneration(){
 
-  generationNumber.textContent =
-    generation;
+  if(generation === 0){
 
-  miceCount.textContent =
-    mice;
+    generationNumber.textContent =
+      "Practice";
 
-  coyoteCount.textContent =
-    coyotes;
+    miceCount.textContent =
+      practiceProblem.startingMice;
 
- if(generation === 0){
+    coyoteCount.textContent =
+      1;
 
-  renderPracticeGeneration();
+    renderPracticeGeneration();
 
-} else {
+  } else {
 
-  renderPhysicalLabGeneration();
+    generationNumber.textContent =
+      generation;
+
+    miceCount.textContent =
+      mice;
+
+    coyoteCount.textContent =
+      coyotes;
+
+    renderPhysicalLabGeneration();
+
+  }
 
 }
 
@@ -652,6 +663,12 @@ function(){
 
 mice = nextMice;
 coyotes = nextCoyotes;
+
+miceCount.textContent =
+  nextMice;
+
+coyoteCount.textContent =
+  nextCoyotes;  
 
 generation++;
 
