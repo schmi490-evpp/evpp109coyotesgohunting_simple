@@ -208,8 +208,6 @@ function renderGeneration(){
 
 }
 
-}
-
 function renderPracticeGeneration(){
 
   const data =
