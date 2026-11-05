@@ -37,7 +37,7 @@ function randomInteger(min,max){
 function generatePracticeProblem(){
 
   const startingMice =
-    randomInteger(10,20);
+    randomInteger(5,20);
 
   const caught =
     randomInteger(1,8);
@@ -55,9 +55,9 @@ function generatePracticeProblem(){
     Math.min(
       Math.max(
         survivingMice * 2,
-        10
+        5
       ),
-      100
+      50
     );
 
   const nextCoyotes =
@@ -260,7 +260,8 @@ You must correctly calculate the results before the automatic calculator unlocks
   <li>Coyotes must catch at least 5 mice to survive.</li>
   <li>One offspring is produced for every 5 mice caught.</li>
   <li>Surviving mice double.</li>
-  <li>Mouse populations cannot exceed 100.</li>
+  <li> If fewer than 3 mice remain, including 0, a small number will recolonize the area to bring the next generation to 5. </li>
+  <li>Mouse populations cannot exceed 50.</li>
   <li>If no coyotes survive and no offspring are produced, a new coyote immigrates into the area. The next generation will still begin with 1 coyote.</li>
   </ul>
   `;
@@ -590,9 +591,9 @@ function(){
     Math.min(
       Math.max(
         survivingMice * 2,
-        10
+        5
       ),
-      100
+      50
     );
 
   let nextCoyotes =
@@ -644,27 +645,6 @@ coyotes = nextCoyotes;
 
 generation++;
 
-// Stop if all mice are gone
-
-if(nextMice === 0){
-
-  resultsOutput.innerHTML += `
-
-  <br><br>
-
-  <strong>
-  Simulation Complete
-  </strong>
-
-  <br>
-
-  The mouse population has gone extinct.
-
-  `;
-
-  return;
-
-}
 
 // Stop after Generation 20
 
@@ -684,6 +664,8 @@ if(generation > 20){
 
   `;
 
+  saveResults();
+
   return;
 
 }
@@ -691,6 +673,66 @@ if(generation > 20){
 renderGeneration();
 
 };
+
+
+async function saveResults(){
+
+  try{
+
+    await addDoc(
+
+      collection(
+        db,
+        "labSubmissions"
+      ),
+
+      {
+
+        studentName,
+        studentEmail,
+        runId,
+
+        timestamp:
+          new Date().toISOString(),
+
+        generationsCompleted:
+          generation - 1,
+
+        finalMice: mice,
+        finalCoyotes: coyotes,
+        
+        history:
+          labHistory
+
+      }
+
+    );
+
+    resultsOutput.innerHTML += `
+
+    <br><br>
+
+    ✅ Results saved successfully.
+
+    `;
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    resultsOutput.innerHTML += `
+
+    <br><br>
+
+    ❌ Firestore save failed.
+
+    `;
+
+  }
+
+}
+
 
 function addTableRow(
   gen,
@@ -737,6 +779,16 @@ csvButton.addEventListener(
 );
 
 function downloadCSV(){
+
+  if(generation <= 20){
+
+  alert(
+    "Complete all 20 generations first."
+  );
+
+  return;
+
+}
 
   let csv =
 
