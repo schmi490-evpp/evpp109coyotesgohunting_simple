@@ -18,7 +18,7 @@ let studentEmail = "";
 let runId = "";
 
 let generation = 0;
-let mice = 10;
+let mice = 5;
 let coyotes = 1;
 
 let labHistory = [];
@@ -515,8 +515,18 @@ function(){
     captures.push(value);
 
     totalCaught += value;
-
+    
   }
+
+  if(totalCaught > mice){
+
+  alert(
+    `You entered ${totalCaught} mice captured, but only ${mice} mice exist in this generation.`
+  );
+
+  return;
+
+}
 
   let survivingMice =
     mice - totalCaught;
