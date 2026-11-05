@@ -567,6 +567,25 @@ function(){
 
   );
 
+  labHistory.push({
+
+  generation,
+
+  mice,
+
+  coyotes,
+
+  captures:
+    captures.join(", "),
+
+  survivingMice,
+
+  survivingCoyotes,
+
+  offspring
+
+});
+
   let nextMice =
     Math.min(
       Math.max(
@@ -620,12 +639,56 @@ function(){
   ${nextCoyotes}
   `;
 
-  mice = nextMice;
-  coyotes = nextCoyotes;
+mice = nextMice;
+coyotes = nextCoyotes;
 
-  generation++;
+generation++;
 
-  renderGeneration();
+// Stop if all mice are gone
+
+if(nextMice === 0){
+
+  resultsOutput.innerHTML += `
+
+  <br><br>
+
+  <strong>
+  Simulation Complete
+  </strong>
+
+  <br>
+
+  The mouse population has gone extinct.
+
+  `;
+
+  return;
+
+}
+
+// Stop after Generation 20
+
+if(generation > 20){
+
+  resultsOutput.innerHTML += `
+
+  <br><br>
+
+  <strong>
+  Simulation Complete
+  </strong>
+
+  <br>
+
+  You have completed 20 generations.
+
+  `;
+
+  return;
+
+}
+
+renderGeneration();
 
 };
 
@@ -660,5 +723,120 @@ function addTableRow(
   `;
 
   tbody.appendChild(row);
+
+}
+
+const csvButton =
+document.getElementById(
+  "download-csv"
+);
+
+csvButton.addEventListener(
+  "click",
+  downloadCSV
+);
+
+function downloadCSV(){
+
+  let csv =
+
+`Generation,StartingMice,StartingCoyotes,Captures,MiceSurviving,CoyotesSurviving,Offspring
+`;
+
+  labHistory.forEach(row => {
+
+    csv +=
+`${row.generation},
+${row.mice},
+${row.coyotes},
+"${row.captures}",
+${row.survivingMice},
+${row.survivingCoyotes},
+${row.offspring}
+`
+.replace(/\n/g,"");
+
+    csv += "\n";
+
+  });
+
+  const blob =
+
+    new Blob(
+      [csv],
+      {type:"text/csv"}
+    );
+
+  const link =
+    document.createElement("a");
+
+  link.href =
+    URL.createObjectURL(blob);
+
+  link.download =
+    `${studentName}_PredatorPrey.csv`;
+
+  link.click();
+
+}
+
+const certificateButton =
+document.getElementById(
+  "download-certificate"
+);
+
+certificateButton.addEventListener(
+  "click",
+  downloadCertificate
+);
+
+function downloadCertificate(){
+
+  if(generation <= 20){
+
+  alert(
+    "Complete all 20 generations first."
+  );
+
+  return;
+
+}
+  const certificate =
+
+`EVPP Predator-Prey Lab
+
+Student:
+${studentName}
+
+Email:
+${studentEmail}
+
+Run ID:
+${runId}
+
+Generations Completed:
+${generation-1}
+
+Date:
+${new Date().toLocaleString()}
+`;
+
+  const blob =
+
+    new Blob(
+      [certificate],
+      {type:"text/plain"}
+    );
+
+  const link =
+    document.createElement("a");
+
+  link.href =
+    URL.createObjectURL(blob);
+
+  link.download =
+    `${studentName}_Certificate.txt`;
+
+  link.click();
 
 }
